@@ -36,8 +36,20 @@
 <body>
   <div class="card">
     <h1>Feedback Received</h1>
-    <p>Your request has been received. This is a simple placeholder page for now.</p>
-    <a href="cee16teen's Production.html">Back to home</a>
+    <p id="thanksText">Your request has been received. This is a simple placeholder page for now.</p>
+    <p id="nameText" style="color: #ffd76a; font-weight: 700; margin-top: 8px;"></p>
+    <a href="index.html">Back to home</a>
   </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const nameText = document.getElementById('nameText');
+    const thanksText = document.getElementById('thanksText');
+
+    if (name) {
+      nameText.textContent = 'Thank you, ' + name + '!';
+      thanksText.textContent = 'Your request has been received and your name has been captured.';
+    }
+  </script>
 </body>
 </html>

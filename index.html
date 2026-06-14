@@ -9,32 +9,69 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background-color: #fff;
-      background-image: url('background.jpg');
-      background-position: center;
+      background-color: #000;
+      background-image: url('black sky.jpg');
+      background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      image-rendering: auto;
+      image-rendering: -webkit-optimize-contrast;
+      filter: contrast(1.16) brightness(1.05) saturate(1.10);
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
       animation: fadeInBody 2.6s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .top-strip {
       width: 100%;
-      height: 96px;
+      min-height: 96px;
       background: rgba(0, 0, 0, 0.75);
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      gap: 10px;
+      padding: 14px 16px 16px;
+      box-sizing: border-box;
+    }
+
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+      margin-right: 18px;
+    }
+
+    .title-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(211, 198, 255, 0.65);
+      box-shadow: 0 0 0 4px rgba(139, 118, 255, 0.18), 0 4px 10px rgba(0, 0, 0, 0.25);
+      flex-shrink: 0;
+      animation: slideDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .title-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .bottom-strip {
       width: 100%;
       background: rgba(0, 0, 0, 0.65);
       margin-top: 32px;
-      padding: 14px 16px 18px;
+      padding: 18px 18px 22px;
       box-sizing: border-box;
+      border: 3px solid rgba(255, 255, 255, 0.18);
+      border-radius: 0;
     }
 
     .bottom-label {
@@ -65,23 +102,47 @@
     }
 
     .bottom-box {
-      width: 76px;
-      height: 46px;
-      border-radius: 8px;
-      background: rgba(60, 60, 60, 0.92);
-      border: 1px solid #d4af37;
+      width: 110px;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      border-radius: 12px;
+      background: rgba(30, 30, 30, 0.95);
+      border: 2px solid #6b6b6b;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      outline: 1px solid #b89cff;
+      outline-offset: 2px;
+    }
+
+    .bottom-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.85;
+    }
+
+    .bottom-box span {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       text-align: center;
       padding: 0 4px;
-      box-sizing: border-box;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95), 0 0 8px rgba(0, 0, 0, 0.65);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.45));
+      pointer-events: none;
     }
 
     .top-button {
@@ -89,10 +150,10 @@
       top: 14px;
       left: 14px;
       z-index: 10;
-      border: none;
+      border: 1px solid rgba(211, 198, 255, 0.55);
       border-radius: 999px;
-      background: #fff;
-      color: #111;
+      background: rgba(139, 118, 255, 0.18);
+      color: #fff;
       padding: 8px 12px;
       font-size: 12px;
       font-weight: 700;
@@ -100,6 +161,8 @@
       letter-spacing: 0.5px;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(6px);
+      animation: slideInFromLeft 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
     }
 
     .popup-panel {
@@ -125,11 +188,24 @@
       margin-top: 0;
       font-size: 22px;
       text-transform: uppercase;
+      text-decoration: underline;
     }
 
     .popup-panel p {
       line-height: 1.5;
       color: #eee;
+    }
+
+    .tracking-steps {
+      margin: 14px 0 0 18px;
+      padding: 0;
+      color: #f5f5f5;
+    }
+
+    .tracking-steps li {
+      margin-bottom: 10px;
+      line-height: 1.45;
+      font-size: 15px;
     }
 
     .popup-close {
@@ -208,18 +284,52 @@
     }
 
     .tile h2 {
-      text-decoration: underline;
-      margin: 0 0 8px 0;
+      margin: 0 auto 8px auto;
       text-align: center;
+      color: #fff;
+      background: rgba(139, 118, 255, 0.18);
+      border: 1px solid rgba(211, 198, 255, 0.5);
+      border-radius: 999px;
+      padding: 8px 10px;
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      box-sizing: border-box;
+      backdrop-filter: blur(6px);
     }
 
     .tile a {
-      color: #d4af37;
+      color: #c4b3ff;
       text-decoration: underline;
     }
 
+    .discord-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .discord-link img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .info-sticker {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 6px;
+      border-radius: 4px;
+    }
+
     .tile a:hover {
-      color: #f0d98c;
+      color: #d9ceff;
     }
 
     .slide-in {
@@ -280,6 +390,17 @@
       }
     }
 
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
     @keyframes fadeInBody {
       0% {
         opacity: 0;
@@ -288,8 +409,9 @@
       }
       100% {
         opacity: 1;
-        background-image: url('background.jpg');
-        background-color: #fff;
+        background-image: url('black sky.jpg');
+        background-color: #000;
+        filter: contrast(1.16) brightness(1.05) saturate(1.10);
       }
     }
   </style>
@@ -297,14 +419,22 @@
 <body>
   <div class="popup-panel" id="infoPanel">
     <div class="popup-close" onclick="closePanel()">×</div>
-    <h3>Information of Recipient</h3>
-    <p><strong>Recipient:</strong> Alex Grant</p>
-    <p><strong>Code:</strong> [R-2048]</p>
-    <p>For tracking purposes, please provide your full name and code to staff or a an affiliate.</p>
+    <h3>How to Track Your Request</h3>
+    <ol class="tracking-steps">
+      <li>Submit your request form on this page and join our Discord server.</li>
+      <li>Save the confirmation email shown after submission and contact the staff through the Discord server.</li>
+      <li>Track your order on the channel and a staff will attend to you showing a brief status of your request</li>
+      <li>Wait for any upcoming updates and confirm your request, any questions further can be asked to the staff.</li>
+    </ol>
   </div>
   <div class="top-strip">
     <button class="top-button" onclick="openPanel()">Ordered Info</button>
-    <h1 class="slide-in" style="margin: 0; color: #fff; font-size: 32px;">Mecuri-Operation</h1>
+    <div class="title-wrap">
+      <h1 class="slide-in" style="margin: 0; color: #fff; font-size: 32px;">Mecuri-Operation</h1>
+      <div class="title-badge slide-in" aria-label="Decorative icon">
+        <img src="background.jpg" alt="Decorative icon">
+      </div>
+    </div>
   </div>
   <main class="content-body">
     <section class="tile">
@@ -315,43 +445,59 @@
             and more for businesses and affiliates that want to show the face
             of their business or headquarters for fans or sponsors.</p>
         </li>
-        <li>Contacts and details
+        <li><img class="info-sticker" src="black phone.jpg" alt="Phone icon"> Contacts and details
           <p>
-            Email: info@cee6teen.com<br>
-            Discord: cee6teen#0001<br>
-            Founder: cee6teen [2026]
+            Email: mercuri.op16@gmail.com<br>
+            Discord: cee6teen <br>
+            Founder: cee6teen (c16) [2026]
           </p>
         </li>
       </ul>
     </section>
     <section class="tile">
       <h2>LODGE A REQUEST</h2>
-      Name of recipient:
-      <input type="text" style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box;" placeholder="Recipient name">
-      <div style="height: 16px;"></div>
-      Email of recipient:
-      <input type="email" style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box;" placeholder="Your email">
-      <div style="height: 16px;"></div>
-      Summary of what to be designed:
-      <input type="text" maxlength="150" style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; line-height: 2.0;" placeholder="Short description">
-      <div style="height: 14px;"></div>
-      <button type="button" onclick="window.location.href='feedback.html'" style="padding: 10px 16px; border: none; border-radius: 8px; background: #d4af37; color: #111; font-weight: 700; cursor: pointer;">SUBMIT</button>
+      <form id="requestForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="return submitRequest(event)">
+        <input type="hidden" name="access_key" value="372637d1-b85a-4181-93f3-96585a0ebea7">
+        <input type="hidden" id="redirect" name="redirect" value="feedback.html">
+
+        Name of recipient:
+        <input id="recipientName" name="name" type="text" required style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box;" placeholder="Recipient name">
+        <div style="height: 16px;"></div>
+        Email of recipient:
+        <input id="recipientEmail" name="email" type="email" required style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box;" placeholder="Your email">
+        <div style="height: 16px;"></div>
+        Summary of what to be designed:
+        <input id="designSummary" name="message" type="text" maxlength="150" required style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; line-height: 2.0;" placeholder="Short description">
+        <div style="height: 14px;"></div>
+        <p id="formMessage" style="color: #e7dfff; font-size: 13px; margin: 0 0 10px 0; min-height: 18px;"></p>
+        <button type="submit" style="padding: 10px 16px; border: none; border-radius: 8px; background: #b89cff; color: #111; font-weight: 700; cursor: pointer;">SUBMIT</button>
+      </form>
     </section>
     <section class="tile full">
       <h2>MORE INFORMATION</h2>
+      <p style="margin: 10px 0 8px 0; color: #f2f2f2; line-height: 1.5;">For extra details, updates, and community access, click the link below containing the discord icon to explore our Discord, promotions, and shared resources.</p>
       <ul>
-        <li><a href="#"> Discord Server</a></li>
-        <li><a href="#">Community Recognition and ADS </a></li>
-        <li><a href="#">More information (.PDF)</a></li>
+        <li>
+          <a class="discord-link" href="https://discord.gg/e5c8ZZjBu" target="_blank" rel="noopener noreferrer"><img src="circle-discord-icon-logo-symbol-free-png.webp" alt="Discord logo">Discord Server (link)</a>
+          <p style="margin: 6px 0 0 0; color: #eee; font-size: 16px; line-height: 1.5;">Dm the owner if the link may not be working</p>
+        </li>
+        <li>
+          <a href="#"><img class="info-sticker" src="program.webp" alt="Program sticker">Afiliation perks</a>
+          <p style="margin: 6px 0 0 0; color: #eee; font-size: 16px; line-height: 1.5;">Affiliated members are groups or communities in which their are partnered with Mercuri. Recieving new features monthly and enhancements to their servers with exclusive benefits.</p>
+        </li>
+        <li>
+          <a href="#"><img class="info-sticker" src="background.jpg" alt="Background sticker">Ad promotions (found in the discord)</a>
+          <p style="margin: 6px 0 0 0; color: #eee; font-size: 16px; line-height: 1.5;"> Our team includes a personal ad creations for your community, targeting meta platforms to show the face of the comunity. Overtime growing your audience. However members need to be affiliated for this perk.</p>
+        </li>
       </ul>
     </section>
   </main>
   <div class="bottom-strip">
     <p class="bottom-label">Partners and founders</p>
     <div class="bottom-row">
-      <div class="bottom-box">CEE16</div>
-      <div class="bottom-box">XEQURII</div>
-      <div class="bottom-box">OMAD</div>
+      <div class="bottom-box"><img src="users.jpg" alt="Users image"><span>CEE16</span></div>
+      <div class="bottom-box"><img src="users.jpg" alt="Users image"><span>XEQURII</span></div>
+      <div class="bottom-box"><img src="users.jpg" alt="Users image"><span>OMAD</span></div>
       <span class="bottom-note">CEE6TEEN's PRODUCTION - @2026</span>
     </div>
   </div>
@@ -361,6 +507,23 @@
     }
     function closePanel() {
       document.getElementById('infoPanel').classList.remove('open');
+    }
+
+    function submitRequest(event) {
+      const name = document.getElementById('recipientName').value.trim();
+      const email = document.getElementById('recipientEmail').value.trim();
+      const summary = document.getElementById('designSummary').value.trim();
+      const message = document.getElementById('formMessage');
+
+      if (!name || !email || !summary) {
+        event.preventDefault();
+        message.textContent = 'Please fill in all fields before submitting.';
+        return false;
+      }
+
+      message.textContent = '';
+      document.getElementById('redirect').value = 'feedback.html?name=' + encodeURIComponent(name);
+      return true;
     }
   </script>
 </body>
