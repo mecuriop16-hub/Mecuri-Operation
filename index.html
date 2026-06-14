@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mecuri-Operation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      background-image: url('background.jpg');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: fadeInBody 2.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .top-strip {
+      width: 100%;
+      height: 96px;
+      background: rgba(0, 0, 0, 0.75);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .bottom-strip {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      margin-top: 32px;
+      padding: 14px 16px 18px;
+      box-sizing: border-box;
+    }
+
+    .bottom-label {
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+    }
+
+    .bottom-row {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .bottom-note {
+      margin-left: auto;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .bottom-box {
+      width: 76px;
+      height: 46px;
+      border-radius: 8px;
+      background: rgba(60, 60, 60, 0.92);
+      border: 1px solid #d4af37;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0 4px;
+      box-sizing: border-box;
+    }
+
+    .top-button {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 10;
+      border: none;
+      border-radius: 999px;
+      background: #fff;
+      color: #111;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .popup-panel {
+      position: fixed;
+      top: 0;
+      left: -420px;
+      width: 320px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.92);
+      color: #fff;
+      padding: 24px;
+      box-sizing: border-box;
+      transition: left 0.45s ease;
+      z-index: 20;
+      overflow-y: auto;
+    }
+
+    .popup-panel.open {
+      left: 0;
+    }
+
+    .popup-panel h3 {
+      margin-top: 0;
+      font-size: 22px;
+      text-transform: uppercase;
+    }
+
+    .popup-panel p {
+      line-height: 1.5;
+      color: #eee;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .content-body {
+      width: 92%;
+      max-width: 1100px;
+      margin: 8px auto 0;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .tile {
+      background: #2f2f2f;
+      color: #fff;
+      width: 280px;
+      min-height: 140px;
+      padding: 18px;
+      box-sizing: border-box;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      animation: slideInTile 0.8s ease forwards;
+    }
+
+    .tile:nth-child(1) {
+      animation-name: slideFromLeft;
+      animation-delay: 0.2s;
+    }
+
+    .tile:nth-child(2) {
+      animation-name: slideFromRight;
+      animation-delay: 0.4s;
+    }
+
+    .tile:nth-child(3) {
+      animation-name: slideFromBottom;
+      animation-delay: 0.6s;
+    }
+
+    .tile,
+    .tile.full {
+      width: 100%;
+      max-width: 578px;
+      margin-top: 0;
+    }
+
+    .tile ul {
+      margin: 24px 0 0 18px;
+      padding: 0;
+    }
+
+    .tile li {
+      margin-bottom: 10px;
+      line-height: 1.4;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .tile p {
+      margin: 12px 0 0 0;
+      line-height: 1.5;
+      color: #f2f2f2;
+      text-transform: none;
+      font-weight: 400;
+    }
+
+    .tile h2 {
+      text-decoration: underline;
+      margin: 0 0 8px 0;
+      text-align: center;
+    }
+
+    .tile a {
+      color: #d4af37;
+      text-decoration: underline;
+    }
+
+    .tile a:hover {
+      color: #f0d98c;
+    }
+
+    .slide-in {
+      margin: 0;
+      font-size: 42px;
+      text-align: center;
+      text-transform: uppercase;
+      color: #fff;
+      letter-spacing: 2px;
+      animation: slideDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    @keyframes slideDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-70px) scale(0.96);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(8px) scale(1.02);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes slideFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideFromBottom {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInBody {
+      0% {
+        opacity: 0;
+        background-image: none;
+        background-color: #fff;
+      }
+      100% {
+        opacity: 1;
+        background-image: url('background.jpg');
+        background-color: #fff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-panel" id="infoPanel">
+    <div class="popup-close" onclick="closePanel()">×</div>
+    <h3>Information of Recipient</h3>
+    <p><strong>Recipient:</strong> Alex Grant</p>
+    <p><strong>Code:</strong> [R-2048]</p>
+    <p>For tracking purposes, please provide your full name and code to staff or a an affiliate.</p>
+  </div>
+  <div class="top-strip">
+    <button class="top-button" onclick="openPanel()">Ordered Info</button>
+    <h1 class="slide-in" style="margin: 0; color: #fff; font-size: 32px;">Mecuri-Operation</h1>
+  </div>
+  <main class="content-body">
+    <section class="tile">
+      <h2>ABOUT US</h2>
+      <ul>
+        <li>Company background
+          <p>Company background: We build professional websites for gaming, marketing, services
+            and more for businesses and affiliates that want to show the face
+            of their business or headquarters for fans or sponsors.</p>
+        </li>
+        <li>Contacts and details
+          <p>
+            Email: info@cee6teen.com<br>
+            Discord: cee6teen#0001<br>
+            Founder: cee6teen [2026]
+          </p>
+        </li>
+      </ul>
+    </section>
+    <section class="tile">
+      <h2>LODGE A REQUEST</h2>
+      Name of recipient:
+      <input type="text" style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box;" placeholder="Recipient name">
+      <div style="height: 16px;"></div>
+      Email of recipient:
+      <input type="email" style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box;" placeholder="Your email">
+      <div style="height: 16px;"></div>
+      Summary of what to be designed:
+      <input type="text" maxlength="150" style="width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; line-height: 2.0;" placeholder="Short description">
+      <div style="height: 14px;"></div>
+      <button type="button" onclick="window.location.href='feedback.html'" style="padding: 10px 16px; border: none; border-radius: 8px; background: #d4af37; color: #111; font-weight: 700; cursor: pointer;">SUBMIT</button>
+    </section>
+    <section class="tile full">
+      <h2>MORE INFORMATION</h2>
+      <ul>
+        <li><a href="#"> Discord Server</a></li>
+        <li><a href="#">Community Recognition and ADS </a></li>
+        <li><a href="#">More information (.PDF)</a></li>
+      </ul>
+    </section>
+  </main>
+  <div class="bottom-strip">
+    <p class="bottom-label">Partners and founders</p>
+    <div class="bottom-row">
+      <div class="bottom-box">CEE16</div>
+      <div class="bottom-box">XEQURII</div>
+      <div class="bottom-box">OMAD</div>
+      <span class="bottom-note">CEE6TEEN's PRODUCTION - @2026</span>
+    </div>
+  </div>
+  <script>
+    function openPanel() {
+      document.getElementById('infoPanel').classList.add('open');
+    }
+    function closePanel() {
+      document.getElementById('infoPanel').classList.remove('open');
+    }
+  </script>
+</body>
+</html>
